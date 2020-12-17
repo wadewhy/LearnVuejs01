@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+
+  <div id="app">
+    <parent-cpn :child-my-message="message" v-bind:class></parent-cpn>
+  </div>
+
+  <template id="parentCpn">
+    <div>
+      <h2>{{childMyMessage}}</h2>
+      <child-cpn1 :son-my-message="childMessage"></child-cpn1>
+      <child-cpn1 :son-my-message="childMessage"></child-cpn1>
+      <child-cpn1 ref="abc" :son-my-message="childMessage"></child-cpn1>
+      <child-cpn2 :son-my-message="childMessage"> </child-cpn2>
+      <button @click="showMessage">显示子组件信息</button>
+    </div>
+  </template>
+  <!-- 子组件1 -->
+  <template id="childCpn1">
+    <h2>子组件1.。。。。。。。。。。{{sonMyMessage}}</h2>
+  </template>
+  <!-- 子组件2 -->
+  <template id="childCpn2">
+    <h2>子组件2.。。。。。。。。。。{{sonMyMessage}}</h2>
+  </template>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+  const childCpn1 = {
+    template: '#childCpn1',
+    props: {
+      sonMyMessage: {
+        type: String,
+        default: ''
+      }
+    },
+    data() {
+      return {
+        name: this.sonMyMessage+"childCpn1name"
+      }
+    },
+    // mounted() {
+    //   this.name=this.sonMyMessage+"childCpn1name"
+    // }
+  }
+  const childCpn2 = {
+    template: '#childCpn2',
+    props: {
+      sonMyMessage: {
+        type: String,
+        default: ''
+      }
+    },
+    data() {
+      return {
+        name: ''
+      }
+    },
+    mounted() {
+      this.name=this.sonMyMessage+"我是子组件的childCpn2name"
+    },
+  }
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊'
+    },
+    components: {
+      parentCpn: {
+        template: '#parentCpn',
+        props: {
+          childMyMessage: {
+            type: String,
+            default: ''
+          }
+        },
+        data() {
+          return {
+            childMessage: this.childMyMessage
+          }
+        },
+        methods: {
+          showMessage() {
+            console.log(this.$children);
+            for (let i = 0; i < this.$children.length; i++) {
+              console.log(this.$children[i].name + i)
+            }
+            //直接取到ref=abc的子组件
+            console.log(this.$refs.abc.name)
+          }
+        },
+        components: {
+          childCpn1, childCpn2
+        }
+      },
+    }
+  })
+</script>
+
+</html>

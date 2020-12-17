@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+    let arr = [1,2,3,4,5,6,7,8,9,10];
+    //        把数组中大于5的筛选出来
+    let new_arr = arr.filter((n) => { console.log(n) ; return n > 5});
+    console.log("filter---------"+new_arr,arr);
+    let new_arr_dou = new_arr.map(n => {
+        console.log(n);
+        return n*2;
+    });
+    console.log("map---------"+new_arr_dou,arr);
+    let new_arr_add = new_arr_dou.reduce((total,n) => {
+        console.log(total,n);
+        return total + n;
+    },0);
+    console.log("reduce---------"+new_arr_add,new_arr_dou);
+</script>
+</html>
